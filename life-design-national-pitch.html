@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Design with AI — Національний проєкт KSE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink:   #0F1117;
+    --paper: #F7F5F0;
+    --navy:  #1C2E5E;
+    --gold:  #C8973A;
+    --mist:  #E8E4DC;
+    --soft:  #5A5F6E;
+    --red:   #C0392B;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--ink); }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 52px 60px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '🇺🇦';
+    position: absolute;
+    right: 56px; top: 44px;
+    font-size: 48px;
+    opacity: .25;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    right: -80px; bottom: -80px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: rgba(200,151,58,.1);
+    pointer-events: none;
+  }
+  .kse-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 5.5vw, 58px);
+    font-weight: 900;
+    line-height: 1.08;
+    margin-bottom: 14px;
+  }
+  h1 span { color: var(--gold); }
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,.65);
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: 28px;
+  }
+  .header-stats {
+    display: flex;
+    gap: 40px;
+    border-top: 1px solid rgba(255,255,255,.12);
+    padding-top: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,.55); line-height: 1.4; }
+
+  /* MAIN */
+  main { max-width: 920px; margin: 0 auto; padding: 0 36px 72px; }
+
+  /* ALERT STRIP */
+  .alert {
+    background: var(--ink);
+    color: #fff;
+    padding: 26px 40px;
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .alert-icon { font-size: 30px; flex-shrink: 0; }
+  .alert-text { font-size: 14.5px; line-height: 1.6; }
+  .alert-text strong { color: var(--gold); }
+
+  /* SECTION */
+  .section { padding: 52px 0 0; }
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--navy); margin-bottom: 24px;
+  }
+
+  /* WHY NOW */
+  .why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .why-card {
+    border-left: 3px solid var(--gold);
+    padding: 18px 20px;
+    background: #fff;
+  }
+  .why-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 900;
+    color: var(--navy); line-height: 1; margin-bottom: 6px;
+  }
+  .why-desc { font-size: 12.5px; color: var(--soft); line-height: 1.55; }
+
+  /* MISSION */
+  .mission-box {
+    background: var(--navy);
+    color: #fff;
+    padding: 36px 40px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 24px;
+  }
+  .mission-box blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    line-height: 1.45;
+    font-weight: 700;
+  }
+  .mission-box blockquote em { color: var(--gold); font-style: normal; }
+  .mission-sub { font-size: 12px; color: rgba(255,255,255,.45); margin-top: 12px; letter-spacing: .05em; }
+
+  /* WHAT */
+  .what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .what-card {
+    border: 1.5px solid var(--mist);
+    padding: 24px;
+    border-radius: 4px;
+    position: relative;
+  }
+  .what-card.featured { border-color: var(--navy); }
+  .what-badge {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--gold); color: #fff;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 2px;
+  }
+  .what-icon { font-size: 26px; margin-bottom: 10px; }
+  .what-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--navy); margin-bottom: 6px;
+  }
+  .what-desc { font-size: 12.5px; color: var(--soft); line-height: 1.55; }
+  .what-tag {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 10px; font-weight: 600;
+    color: var(--navy);
+    background: var(--mist);
+    padding: 3px 8px; border-radius: 2px;
+  }
+
+  /* ROLLOUT */
+  .rollout { display: flex; flex-direction: column; gap: 0; margin-top: 24px; }
+  .phase {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    position: relative;
+  }
+  .phase::before {
+    content: '';
+    position: absolute;
+    left: 60px; top: 44px; bottom: 0;
+    width: 2px;
+    background: var(--mist);
+  }
+  .phase:last-child::before { display: none; }
+  .phase-time {
+    text-align: center;
+    padding: 20px 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .phase-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 6px;
+  }
+  .phase:nth-child(2) .phase-dot { background: var(--gold); }
+  .phase:nth-child(3) .phase-dot { background: #1a7a4a; }
+  .phase-dur { font-size: 10px; color: var(--soft); line-height: 1.4; }
+  .phase-body {
+    padding: 20px 20px 32px;
+    border-left: 1px solid var(--mist);
+    margin-left: 0;
+  }
+  .phase-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .phase-items { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .phase-items li {
+    font-size: 12.5px; color: var(--soft);
+    padding-left: 14px; position: relative; line-height: 1.5;
+  }
+  .phase-items li::before {
+    content: '–';
+    position: absolute; left: 0;
+    color: var(--gold);
+  }
+
+  /* GRANTS */
+  .grant-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 24px; }
+  .grant-pill {
+    background: #fff;
+    border: 1.5px solid var(--mist);
+    padding: 16px 14px;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .grant-name { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .grant-type { font-size: 11px; color: var(--soft); line-height: 1.4; }
+
+  /* ROLE — HERO */
+  .role-hero {
+    margin-top: 52px;
+    background: linear-gradient(135deg, #1C2E5E 0%, #0f1a3a 100%);
+    color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .role-top {
+    padding: 36px 40px 28px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .role-eyebrow {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+  .role-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 900; line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .role-title span { color: var(--gold); }
+  .role-desc { font-size: 13.5px; color: rgba(255,255,255,.72); line-height: 1.65; }
+  .role-bottom {
+    padding: 24px 40px;
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .role-chip {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.18);
+    padding: 7px 16px;
+    border-radius: 2px;
+    font-size: 12px;
+    color: rgba(255,255,255,.85);
+  }
+
+  /* PARTNERSHIP */
+  .partnership {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: center;
+  }
+  .partner-box {
+    padding: 24px;
+    background: #fff;
+    border: 1.5px solid var(--mist);
+    border-radius: 4px;
+    text-align: center;
+  }
+  .partner-name { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .partner-role { font-size: 12px; color: var(--soft); line-height: 1.5; }
+  .partner-arrow {
+    font-size: 28px; color: var(--gold);
+    text-align: center; padding: 0 20px;
+    font-weight: 900;
+  }
+  .partner-gives { margin-top: 10px; }
+  .partner-gives span {
+    display: inline-block;
+    font-size: 10.5px;
+    background: var(--mist);
+    color: var(--navy);
+    font-weight: 600;
+    padding: 3px 8px; border-radius: 2px;
+    margin: 2px 2px;
+  }
+
+  /* CTA */
+  .cta-strip {
+    margin-top: 48px;
+    background: var(--gold);
+    padding: 32px 40px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    border-radius: 4px;
+  }
+  .cta-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #fff; }
+  .cta-sub { font-size: 12.5px; color: rgba(255,255,255,.8); margin-top: 4px; }
+  .cta-ask {
+    background: #fff;
+    color: var(--navy);
+    font-weight: 700; font-size: 13px;
+    padding: 12px 24px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  footer {
+    text-align: center; padding: 24px; font-size: 11px;
+    color: var(--soft); border-top: 1px solid var(--mist);
+  }
+  footer strong { color: var(--navy); }
+
+  @media (max-width: 640px) {
+    header { padding: 36px 24px 32px; }
+    .header-stats { gap: 24px; flex-wrap: wrap; }
+    main { padding: 0 16px 48px; }
+    .alert { padding: 20px; flex-direction: column; gap: 12px; }
+    .why-grid, .what-grid { grid-template-columns: 1fr; }
+    .grant-grid { grid-template-columns: repeat(2,1fr); }
+    .phase { grid-template-columns: 80px 1fr; }
+    .phase::before { left: 40px; }
+    .partnership { grid-template-columns: 1fr; }
+    .partner-arrow { transform: rotate(90deg); padding: 8px 0; }
+    .cta-strip { flex-direction: column; text-align: center; }
+    .role-bottom { padding: 20px 24px; }
+    .role-top { padding: 28px 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kse-badge">Kyiv School of Economics · Pilot Proposal 2026</div>
+  <h1>Life Design<br>with <span>AI</span><br>для підлітків України</h1>
+  <p class="header-sub">Перший національний проєкт свідомого кар'єрного проєктування для нового покоління</p>
+  <div class="header-stats">
+    <div>
+      <div class="stat-num">1M+</div>
+      <div class="stat-label">підлітків в Україні<br>без чіткого кар'єрного орієнтира</div>
+    </div>
+    <div>
+      <div class="stat-num">0</div>
+      <div class="stat-label">системних програм<br>з AI + профорієнтації в Україні</div>
+    </div>
+    <div>
+      <div class="stat-num">2026</div>
+      <div class="stat-label">вікно можливостей —<br>поки ніша вільна</div>
+    </div>
+  </div>
+</header>
+
+<div class="alert">
+  <div class="alert-icon">⚡</div>
+  <div class="alert-text">
+    Українські підлітки обирають професію <strong>застарілими методами</strong> — тести з 90-х, поради батьків, випадкові вакансії. Жодна освітня інституція в Україні ще не запропонувала системну відповідь на питання: <strong>як будувати кар'єру в епоху AI?</strong> KSE може стати першою.
+  </div>
+</div>
+
+<main>
+
+  <!-- WHY NOW -->
+  <div class="section">
+    <div class="section-label">Чому зараз</div>
+    <div class="section-title">Три причини діяти у 2026 році</div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">AI</div>
+        <div class="why-desc">55% професій зміниться протягом 10 років. Підлітки обирають майбутнє без розуміння нового ринку праці.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">🇺🇦</div>
+        <div class="why-desc">Відновлення України потребує нового покоління з чітким баченням себе в економіці країни — не в еміграції.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">∅</div>
+        <div class="why-desc">Жоден великий гравець — ні MОН, ні EdTech — не запропонував системного рішення. Ніша вільна.</div>
+      </div>
+    </div>
+
+    <div class="mission-box">
+      <blockquote>
+        «Допомогти кожному українському підлітку <em>спроєктувати</em> своє майбутнє —<br>а не просто знайти першу вакансію»
+      </blockquote>
+      <p class="mission-sub">Місія проєкту · Life Design with AI · KSE</p>
+    </div>
+  </div>
+
+  <!-- WHAT -->
+  <div class="section">
+    <div class="section-label">Що це</div>
+    <div class="section-title">Не курс — екосистема</div>
+    <div class="what-grid">
+      <div class="what-card featured">
+        <div class="what-badge">Старт пілоту</div>
+        <div class="what-icon">🎓</div>
+        <div class="what-name">Teen Career Design</div>
+        <div class="what-desc">Програма для старшокласників (14–18 років): AI-діагностика сильних сторін, аналіз професій майбутнього, побудова персонального roadmap на 5 років.</div>
+        <div class="what-tag">Старшокласники · онлайн + школи</div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">🤖</div>
+        <div class="what-name">AI як персональний наставник</div>
+        <div class="what-desc">AI аналізує особистість, мотивацію, досвід — і пропонує 5–10 кар'єрних сценаріїв. Потім коуч-людина допомагає обрати і побудувати план.</div>
+        <div class="what-tag">Ikigai · SWOT · Roadmap</div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">🌍</div>
+        <div class="what-name">Масштаб — вся Україна</div>
+        <div class="what-desc">Онлайн-формат дозволяє охопити підлітків у всіх регіонах — і в Україні, і за кордоном. Партнерство зі школами, МОН, діаспорними організаціями.</div>
+        <div class="what-tag">Національне охоплення</div>
+      </div>
+      <div class="what-card">
+        <div class="what-icon">📜</div>
+        <div class="what-name">Сертифікація KSE</div>
+        <div class="what-desc">Випускники отримують сертифікат від KSE — це підсилює цінність для учасників і дає школі нову точку контакту з майбутніми студентами.</div>
+        <div class="what-tag">KSE Alumni Pipeline</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROLLOUT -->
+  <div class="section">
+    <div class="section-label">Дорожня карта</div>
+    <div class="section-title">Від пілоту до національного проєкту</div>
+    <div class="rollout">
+      <div class="phase">
+        <div class="phase-time">
+          <div class="phase-dot">1</div>
+          <div class="phase-dur">Місяць<br>1–3</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Пілот · 50 підлітків</div>
+          <ul class="phase-items">
+            <li>Розробка методології та AI-інструментів</li>
+            <li>Пілотна програма з 50 старшокласниками</li>
+            <li>Збір кейсів і результатів для grant application</li>
+            <li>Партнерство з 3–5 школами</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-time">
+          <div class="phase-dot">2</div>
+          <div class="phase-dur">Місяць<br>4–9</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Масштабування · 500–1000 підлітків</div>
+          <ul class="phase-items">
+            <li>Залучення гранту EU / USAID / UNICEF</li>
+            <li>Партнерство з МОН та регіональними школами</li>
+            <li>Онлайн-платформа та сертифікація KSE</li>
+            <li>PR: медіа, соцмережі, KSE YouTube</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-time">
+          <div class="phase-dot">3</div>
+          <div class="phase-dur">Рік<br>2+</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Національна програма · вся Україна</div>
+          <ul class="phase-items">
+            <li>Щорічний Career Design Bootcamp</li>
+            <li>Програма для українців за кордоном</li>
+            <li>Корпоративні та державні партнерства</li>
+            <li>Life Design with AI як флагманський бренд KSE</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRANTS -->
+  <div class="section">
+    <div class="section-label">Фінансування</div>
+    <div class="section-title">Грантовий потенціал — проєкт під ці критерії</div>
+    <div class="grant-grid">
+      <div class="grant-pill">
+        <div class="grant-name">EU4Youth</div>
+        <div class="grant-type">Молодь, освіта, цифрові навички</div>
+      </div>
+      <div class="grant-pill">
+        <div class="grant-name">USAID</div>
+        <div class="grant-type">Відновлення України, людський капітал</div>
+      </div>
+      <div class="grant-pill">
+        <div class="grant-name">UNICEF</div>
+        <div class="grant-type">Діти та молодь в кризових умовах</div>
+      </div>
+      <div class="grant-pill">
+        <div class="grant-name">British Council</div>
+        <div class="grant-type">Освіта, AI, соціальний вплив</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTNERSHIP -->
+  <div class="section">
+    <div class="section-label">Партнерство</div>
+    <div class="section-title">Два ресурси — одна сила</div>
+    <div class="partnership">
+      <div class="partner-box">
+        <div class="partner-name">KSE</div>
+        <div class="partner-role">Академічний авторитет,<br>методологія, бренд, мережа</div>
+        <div class="partner-gives">
+          <span>Сертифікація</span>
+          <span>Дослідження</span>
+          <span>Медіа</span>
+          <span>Мережа партнерів</span>
+        </div>
+      </div>
+      <div class="partner-arrow">⇄</div>
+      <div class="partner-box">
+        <div class="partner-name">Iryna</div>
+        <div class="partner-role">Експертиза, управління проєктом,<br>реалізація на місцях</div>
+        <div class="partner-gives">
+          <span>Профорієнтація</span>
+          <span>Коучинг</span>
+          <span>NGO-досвід</span>
+          <span>Гранти</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROLE -->
+  <div class="role-hero">
+    <div class="role-top">
+      <div class="role-eyebrow">Керівник проєкту</div>
+      <div class="role-title">Ірина Пилипенко —<br><span>Project Director</span><br>Life Design with AI · KSE</div>
+      <div class="role-desc">
+        Досвід у профорієнтації та коучингу + управління благодійним фондом (Hope Children of Ukraine) + розуміння грантового середовища = ідеальний профіль для керівника національного соціального проєкту під егідою KSE.<br><br>
+        Не просто виконавець — <strong style="color:var(--gold)">архітектор і драйвер проєкту</strong>, який будує його з нуля і масштабує до загальнонаціонального рівня.
+      </div>
+    </div>
+    <div class="role-bottom">
+      <div class="role-chip">✦ Профорієнтація & Коучинг</div>
+      <div class="role-chip">✦ Project Management</div>
+      <div class="role-chip">✦ NGO & Fundraising</div>
+      <div class="role-chip">✦ AI-освіта</div>
+      <div class="role-chip">✦ Grant Writing</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div>
+      <div class="cta-text">Наступний крок — 30-хвилинна зустріч</div>
+      <div class="cta-sub">Обговорити структуру пілоту, розподіл ролей і першу грантову заявку</div>
+    </div>
+    <div class="cta-ask">Зустрітись і обговорити →</div>
+  </div>
+
+</main>
+
+<footer>
+  Підготовлено для <strong>Тимофія Милованова</strong>, Президента KSE &nbsp;·&nbsp;
+  Ірина Пилипенко, Project Director Proposal &nbsp;·&nbsp; 2026
+</footer>
+
+</body>
+</html>
