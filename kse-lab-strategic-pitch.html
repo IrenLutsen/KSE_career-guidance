@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KSE Life Design Lab — Стратегічна записка</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#13203F; --gold:#C8973A; --paper:#F7F5F0;
+    --mist:#E3DFD5; --soft:#5C5F6B; --ink:#0A0C14; --white:#FFFFFF;
+    --red:#A33A2E; --green:#1F6B45;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--white);color:var(--ink);overflow-x:hidden}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,12,20,.97);backdrop-filter:blur(10px);padding:0 56px;height:60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+  .nav-l{display:flex;align-items:center;gap:10px}
+  .nav-tag{font-size:10px;font-weight:700;letter-spacing:.18em;color:rgba(255,255,255,.4);text-transform:uppercase}
+  .nav-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#fff}
+  .nav-name em{color:var(--gold);font-style:normal}
+  .nav-r{display:flex;align-items:center;gap:24px}
+  .nav-r a{font-size:11.5px;color:rgba(255,255,255,.55);text-decoration:none}
+  .nav-cta{background:var(--gold);color:#fff;font-size:10.5px;font-weight:700;padding:8px 18px;text-decoration:none;letter-spacing:.04em;text-transform:uppercase}
+
+  .hero{min-height:100vh;background:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:120px 64px 64px;position:relative}
+  .hero-grid-bg{position:absolute;inset:0;opacity:.4;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+  .hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%}
+  .hero-kicker{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+  .hero-kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--red);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .hero-kicker span{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5.5vw,68px);font-weight:900;color:#fff;line-height:1.05;margin-bottom:28px;max-width:920px}
+  .hero h1 em{color:var(--gold);font-style:normal}
+  .hero-cost-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:48px;border-top:1px solid rgba(255,255,255,.1)}
+  .cost-card{padding:28px 32px 0;border-right:1px solid rgba(255,255,255,.08)}
+  .cost-card:last-child{border-right:none}
+  .cost-num{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,42px);font-weight:900;line-height:1}
+  .cost-num.red{color:var(--red)}
+  .cost-num.gold{color:var(--gold)}
+  .cost-num.white{color:#fff}
+  .cost-label{font-size:12px;color:rgba(255,255,255,.45);margin-top:8px;line-height:1.5}
+  .cost-src{font-size:9.5px;color:rgba(255,255,255,.25);margin-top:6px;letter-spacing:.03em}
+
+  .mv-quote{background:var(--navy);padding:56px 64px}
+  .mvq-inner{max-width:1100px;margin:0 auto;display:flex;gap:48px;align-items:center}
+  .mvq-mark{font-family:'Playfair Display',serif;font-size:80px;color:var(--gold);line-height:.5;opacity:.5}
+  .mvq-text{flex:1}
+  .mvq-text p{font-family:'Playfair Display',serif;font-size:clamp(18px,2.2vw,26px);font-style:italic;color:#fff;line-height:1.5;margin-bottom:14px}
+  .mvq-src{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.05em}
+
+  .sec{padding:88px 64px}
+  .wrap{max-width:1100px;margin:0 auto}
+  .ey{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .ey .num{font-family:'JetBrains Mono',monospace;background:var(--navy);color:#fff;padding:2px 7px;border-radius:2px;font-size:9px}
+  .h2{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,40px);font-weight:700;color:var(--navy);margin-bottom:14px;line-height:1.15}
+  .lead{font-size:15px;color:var(--soft);line-height:1.7;max-width:700px;margin-bottom:44px}
+
+  .chain-sec{background:var(--paper)}
+  .chain{display:flex;flex-direction:column;gap:0}
+  .chain-step{display:grid;grid-template-columns:64px 1fr;gap:24px;position:relative}
+  .chain-step::before{content:'';position:absolute;left:31px;top:64px;bottom:-8px;width:2px;background:var(--mist)}
+  .chain-step:last-child::before{display:none}
+  .chain-num{width:64px;height:64px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:18px;color:var(--gold);flex-shrink:0}
+  .chain-body{padding-bottom:36px}
+  .chain-title{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px}
+  .chain-text{font-size:13.5px;color:var(--soft);line-height:1.65;max-width:680px}
+  .chain-proof{display:inline-block;margin-top:10px;background:#fff;border:1px solid var(--mist);border-radius:4px;padding:8px 14px;font-size:11.5px;color:var(--navy);font-weight:600}
+  .chain-proof .mono{color:var(--gold)}
+
+  .roi-sec{background:var(--ink);color:#fff}
+  .roi-sec .ey{color:var(--gold)}
+  .roi-sec .h2{color:#fff}
+  .roi-sec .lead{color:rgba(255,255,255,.55)}
+  .roi-table{border:1px solid rgba(255,255,255,.1);border-radius:6px;overflow:hidden}
+  .roi-row{display:grid;grid-template-columns:1fr 140px 140px 1fr;gap:0;border-bottom:1px solid rgba(255,255,255,.08)}
+  .roi-row:last-child{border-bottom:none}
+  .roi-row.header{background:rgba(255,255,255,.04)}
+  .roi-cell{padding:18px 20px;font-size:13px;display:flex;align-items:center}
+  .roi-row.header .roi-cell{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+  .roi-cell.label{color:rgba(255,255,255,.85);font-weight:500}
+  .roi-cell.num{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--gold);justify-content:flex-end}
+  .roi-cell.result{color:rgba(255,255,255,.5);font-size:12px}
+  .roi-final{display:flex;justify-content:space-between;align-items:center;background:var(--gold);padding:24px 28px;margin-top:0;border-radius:0 0 6px 6px}
+  .roi-final-label{font-size:13px;font-weight:700;color:#fff}
+  .roi-final-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#fff}
+
+  .eco-sec{background:var(--white)}
+  .eco-compare{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--mist);border-radius:8px;overflow:hidden}
+  .eco-col{padding:32px}
+  .eco-col.old{background:var(--paper)}
+  .eco-col.new{background:var(--navy);color:#fff}
+  .eco-col-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:18px}
+  .eco-col.old .eco-col-label{color:var(--soft)}
+  .eco-col.new .eco-col-label{color:var(--gold)}
+  .eco-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px;align-items:flex-start}
+  .eco-col.new .eco-item{border-bottom-color:rgba(255,255,255,.1)}
+  .eco-item:last-child{border-bottom:none}
+  .eco-icon{flex-shrink:0;width:18px}
+  .eco-col.old .eco-item{color:var(--soft)}
+  .eco-col.new .eco-item{color:rgba(255,255,255,.85)}
+
+  .tracks-sec{background:var(--paper)}
+  .tracks-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--mist);border-radius:8px;overflow:hidden}
+  .track{background:var(--white);padding:28px 24px}
+  .track-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);font-weight:700;margin-bottom:10px}
+  .track-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);margin-bottom:6px}
+  .track-aud{font-size:11.5px;color:var(--soft);margin-bottom:16px}
+  .track-stats{display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:1px solid var(--mist)}
+  .track-stat{display:flex;justify-content:space-between;font-size:11.5px}
+  .track-stat-l{color:var(--soft)}
+  .track-stat-v{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--navy)}
+
+  .budget-sec{background:var(--white)}
+  .budget-banner{background:var(--navy);color:#fff;padding:24px 32px;border-radius:6px 6px 0 0;display:flex;justify-content:space-between;align-items:center}
+  .bb-text{font-size:13px;color:rgba(255,255,255,.7)}
+  .bb-num{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--gold)}
+  .budget-tabs{display:flex;gap:0;border:1.5px solid var(--mist);border-top:none}
+  .btab{flex:1;text-align:center;padding:16px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--soft);border-right:1px solid var(--mist);transition:all .2s}
+  .btab:last-child{border-right:none}
+  .btab.active{background:var(--paper);color:var(--navy)}
+  .bphase{display:none;border:1.5px solid var(--mist);border-top:none;border-radius:0 0 6px 6px;padding:32px}
+  .bphase.active{display:block}
+  .budget-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .b-col-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--mist)}
+  .b-row{display:flex;justify-content:space-between;padding:9px 0;font-size:12.5px;border-bottom:1px solid var(--mist)}
+  .b-row-l{color:var(--soft)}
+  .b-row-v{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--navy)}
+  .b-row-v.in{color:var(--green)}
+  .b-total-row{display:flex;justify-content:space-between;padding:14px 0 0;font-size:13.5px;font-weight:700;margin-top:8px}
+  .b-total-row .b-row-v{font-size:16px}
+  .b-kse-cost{margin-top:24px;background:var(--paper);border-left:3px solid var(--gold);padding:16px 20px;font-size:12.5px;color:var(--navy);line-height:1.6}
+  .b-kse-cost strong{color:var(--red)}
+  .b-kse-cost strong.zero{color:var(--green)}
+
+  .risk-sec{background:var(--paper)}
+  .risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .risk-card{background:#fff;border:1.5px solid var(--mist);border-radius:6px;padding:22px}
+  .risk-card.flag{border-left:3px solid var(--red)}
+  .risk-q{font-size:12.5px;font-weight:700;color:var(--red);margin-bottom:10px}
+  .risk-a{font-size:12.5px;color:var(--soft);line-height:1.6}
+
+  .dir-sec{background:var(--white)}
+  .dir-grid{display:grid;grid-template-columns:1fr 320px;gap:48px}
+  .dir-name{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--navy)}
+  .dir-role{font-size:12.5px;color:var(--gold);font-weight:700;margin-bottom:20px;letter-spacing:.03em}
+  .dir-facts{display:flex;flex-direction:column;gap:0}
+  .dir-fact{display:flex;gap:16px;padding:12px 0;border-bottom:1px solid var(--mist)}
+  .dir-fact-n{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--navy);min-width:56px;font-size:15px}
+  .dir-fact-t{font-size:12.5px;color:var(--soft);line-height:1.5}
+  .dir-side{background:var(--navy);border-radius:8px;padding:28px}
+  .dir-side-title{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  .dir-side-item{font-size:12px;color:rgba(255,255,255,.7);padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);line-height:1.5}
+  .dir-side-item:last-child{border-bottom:none}
+
+  .decision-sec{background:var(--ink);color:#fff;padding:96px 64px;text-align:center;position:relative;overflow:hidden}
+  .decision-sec::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(200,151,58,.08) 0%,transparent 70%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none}
+  .decision-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+  .decision-kicker{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+  .decision-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,46px);font-weight:900;margin-bottom:32px;line-height:1.2}
+  .decision-options{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:40px 0;text-align:left}
+  .opt-card{border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:24px}
+  .opt-card.yes{border-color:var(--gold);background:rgba(200,151,58,.06)}
+  .opt-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+  .opt-card.yes .opt-label{color:var(--gold)}
+  .opt-card.no .opt-label{color:rgba(255,255,255,.4)}
+  .opt-text{font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.6}
+  .cta-row{display:flex;gap:14px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+  .btn-p{background:var(--gold);color:#fff;font-size:13px;font-weight:700;padding:16px 38px;border-radius:4px;text-decoration:none}
+  .btn-s{border:1.5px solid rgba(255,255,255,.25);color:#fff;font-size:13px;padding:16px 38px;border-radius:4px;text-decoration:none}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.3);text-align:center;padding:28px;font-size:11px;border-top:1px solid rgba(255,255,255,.08)}
+
+  @media(max-width:768px){
+    nav{padding:0 20px}
+    .nav-r a{display:none}
+    .hero,.sec,.mv-quote,.decision-sec{padding-left:20px;padding-right:20px}
+    .hero-cost-row{grid-template-columns:1fr}
+    .cost-card{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:20px;margin-bottom:8px}
+    .mvq-inner{flex-direction:column;gap:20px}
+    .mvq-mark{font-size:50px}
+    .chain-step{grid-template-columns:48px 1fr;gap:16px}
+    .chain-num{width:48px;height:48px;font-size:14px}
+    .chain-step::before{left:23px}
+    .roi-row{grid-template-columns:1fr;gap:4px;padding:14px 0}
+    .roi-row.header{display:none}
+    .roi-cell{padding:2px 20px}
+    .eco-compare,.dir-grid,.budget-grid,.decision-options{grid-template-columns:1fr}
+    .tracks-row{grid-template-columns:1fr}
+    .risk-grid{grid-template-columns:1fr}
+    .budget-tabs{flex-direction:column}
+    .btab{border-right:none;border-bottom:1px solid var(--mist)}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-l">
+    <span class="nav-tag">KSE</span>
+    <span class="nav-name">Life Design <em>Lab</em></span>
+  </div>
+  <div class="nav-r">
+    <a href="#logic">Логіка</a>
+    <a href="#roi">ROI</a>
+    <a href="#budget">Бюджет</a>
+    <a href="#risks">Ризики</a>
+    <a href="#decision" class="nav-cta">Рішення →</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-kicker"><span class="dot"></span><span>Стратегічна записка для Президента KSE · Не благодійність — інвестиція</span></div>
+    <h1>Росія вкладає $10 000 у інженера дрона.<br>Україна вкладає <em>$0</em> у вибір кар'єри підлітка.</h1>
+    <div class="hero-cost-row">
+      <div class="cost-card">
+        <div class="cost-num red">$10 000</div>
+        <div class="cost-label">вартість підготовки одного інженера-розробника дрона в РФ</div>
+        <div class="cost-src">за оцінкою Т. Милованова, УП, 2025</div>
+      </div>
+      <div class="cost-card">
+        <div class="cost-num white">$1 500–2 000</div>
+        <div class="cost-label">витрати на одного студента в провідних українських університетах (КНУ, КПІ, Могилянка)</div>
+        <div class="cost-src">за оцінкою Т. Милованова, УП, 2025</div>
+      </div>
+      <div class="cost-card">
+        <div class="cost-num gold">$0</div>
+        <div class="cost-label">системних AI-інструментів профорієнтації для 1,4М українських підлітків сьогодні</div>
+        <div class="cost-src">аналіз ринку, 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mv-quote">
+  <div class="mvq-inner">
+    <div class="mvq-mark">"</div>
+    <div class="mvq-text">
+      <p>Якщо талановита молодь виїде або не отримає якісної освіти тут, то що ми захищаємо? Одна справа — якщо суперталант вступає до Гарварду чи МІТ і стає глобальним українцем. Але якщо він їде в другорядний університет у Польщі — це втрата для всіх.</p>
+      <div class="mvq-src">— Тимофій Милованов, Українська правда, жовтень 2025</div>
+    </div>
+  </div>
+</div>
+
+<section class="sec chain-sec" id="logic">
+  <div class="wrap">
+    <div class="ey"><span class="num">01</span>Логічний ланцюг</div>
+    <div class="h2">Чому профорієнтація — це утримання талантів, а не соціальний проєкт</div>
+    <p class="lead">П'ять кроків від проблеми втрати людського капіталу до конкретного інструменту KSE, який її вирішує.</p>
+
+    <div class="chain">
+      <div class="chain-step">
+        <div class="chain-num">1</div>
+        <div class="chain-body">
+          <div class="chain-title">Підліток не бачить свого місця в економіці України</div>
+          <div class="chain-text">Без чіткого бачення кар'єри підліток обирає за інерцією — або обирає еміграцію, бо «там точно краще». Це не патріотизм проти прагматизму. Це відсутність інформації для прийняття рішення.</div>
+        </div>
+      </div>
+      <div class="chain-step">
+        <div class="chain-num">2</div>
+        <div class="chain-body">
+          <div class="chain-title">Він вступає в «другорядний університет у Польщі» — і не повертається</div>
+          <div class="chain-text">Це саме та втрата, про яку говорить Милованов. Не тому що там краще навчають — а тому що в Україні ніхто не показав, що тут є шлях.</div>
+          <div class="chain-proof">Згідно з прогнозом Милованова: <span class="mono">10 млн</span> трудових мігрантів знадобиться Україні для відновлення економіки за поточних демографічних трендів</div>
+        </div>
+      </div>
+      <div class="chain-step">
+        <div class="chain-num">3</div>
+        <div class="chain-body">
+          <div class="chain-title">KSE будує екосистему, а не кампус — і профорієнтація вписується в цю логіку</div>
+          <div class="chain-text">Милованов прямо відмовився від моделі університету-кампусу на користь гнучкої екосистеми викладачів і програм. Life Design Lab — це той самий принцип: не будівля, а інструмент, що масштабується через AI і партнерства.</div>
+        </div>
+      </div>
+      <div class="chain-step">
+        <div class="chain-num">4</div>
+        <div class="chain-body">
+          <div class="chain-title">AI-коучинг дешевший за традиційну профорієнтацію в 10+ разів</div>
+          <div class="chain-text">Жива консультація психолога коштує $30–50/година. AI-діагностика + коучинг-сесія в моделі Lab — $3–5 на учасника. Це дозволяє охопити мільйони, а не сотні.</div>
+        </div>
+      </div>
+      <div class="chain-step">
+        <div class="chain-num">5</div>
+        <div class="chain-body">
+          <div class="chain-title">Кожен підліток із чітким планом — це утриманий людський капітал</div>
+          <div class="chain-text">Результат не «гарне відчуття після коучингу». Результат — конкретний Career Map, що тримає підлітка в українській освітній і економічній орбіті замість випадкової еміграції.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec roi-sec" id="roi">
+  <div class="wrap">
+    <div class="ey"><span class="num">02</span>Економіка рішення</div>
+    <div class="h2">Вартість одного учасника vs вартість його втрати</div>
+    <p class="lead">Порівняння в логіці, яку KSE використовує для будь-якого рішення: що ми витрачаємо проти того, що втрачаємо.</p>
+
+    <div class="roi-table">
+      <div class="roi-row header">
+        <div class="roi-cell">Показник</div>
+        <div class="roi-cell">Без Lab</div>
+        <div class="roi-cell">З Lab</div>
+        <div class="roi-cell">Коментар</div>
+      </div>
+      <div class="roi-row">
+        <div class="roi-cell label">Вартість профорієнтації на 1 підлітка</div>
+        <div class="roi-cell num">$0</div>
+        <div class="roi-cell num">~$5</div>
+        <div class="roi-cell result">AI-діагностика + коучинг-сесія</div>
+      </div>
+      <div class="roi-row">
+        <div class="roi-cell label">Ймовірність усвідомленого вибору вишу/професії</div>
+        <div class="roi-cell num">~30%</div>
+        <div class="roi-cell num">~75%+</div>
+        <div class="roi-cell result">Очікувано за моделлю пілоту</div>
+      </div>
+      <div class="roi-row">
+        <div class="roi-cell label">Втрата при еміграції в «другорядний виш»</div>
+        <div class="roi-cell num">~$50K+</div>
+        <div class="roi-cell num">—</div>
+        <div class="roi-cell result">Втрачений людський капітал на одну особу за оцінкою KSE Institute</div>
+      </div>
+      <div class="roi-row">
+        <div class="roi-cell label">Вартість охоплення 25 000 підлітків/рік</div>
+        <div class="roi-cell num">—</div>
+        <div class="roi-cell num">~$125K</div>
+        <div class="roi-cell result">Повна операційна модель фази 3</div>
+      </div>
+    </div>
+    <div class="roi-final">
+      <div class="roi-final-label">ROI: $125K інвестиції потенційно утримують людський капітал на десятки мільйонів доларів</div>
+      <div class="roi-final-num">400x+</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec eco-sec">
+  <div class="wrap">
+    <div class="ey"><span class="num">03</span>Модель будівництва</div>
+    <div class="h2">Не новий підрозділ з будівлею. Екосистемний інструмент.</div>
+    <p class="lead">Та сама логіка, за якою KSE відмовилась від кампусу на користь гнучкої моделі викладачів і програм.</p>
+
+    <div class="eco-compare">
+      <div class="eco-col old">
+        <div class="eco-col-label">Традиційна модель</div>
+        <div class="eco-item"><span class="eco-icon">✗</span>Новий факультет, штат, інфраструктура</div>
+        <div class="eco-item"><span class="eco-icon">✗</span>Роки на запуск, мільйони на старт</div>
+        <div class="eco-item"><span class="eco-icon">✗</span>Обмежений масштаб через фізичні ресурси</div>
+        <div class="eco-item"><span class="eco-icon">✗</span>Висока вартість на одного учасника</div>
+      </div>
+      <div class="eco-col new">
+        <div class="eco-col-label">Модель Lab</div>
+        <div class="eco-item"><span class="eco-icon">✓</span>Один Lab Director + AI-інфраструктура + партнерські школи</div>
+        <div class="eco-item"><span class="eco-icon">✓</span>3 місяці до пілоту, €0–800 на старт</div>
+        <div class="eco-item"><span class="eco-icon">✓</span>Масштаб обмежений лише попитом, не інфраструктурою</div>
+        <div class="eco-item"><span class="eco-icon">✓</span>~$5 на учасника при масштабуванні</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec tracks-sec">
+  <div class="wrap">
+    <div class="ey"><span class="num">04</span>Структура</div>
+    <div class="h2">Три напрямки — три різні точки виходу на грантовий ринок</div>
+    <p class="lead">Кожен трек відповідає окремій категорії донорського фінансування — це не один проєкт, а портфель з трьома незалежними джерелами грошей.</p>
+
+    <div class="tracks-row">
+      <div class="track">
+        <div class="track-num">TRACK / 01</div>
+        <div class="track-name">Teen Career Design</div>
+        <div class="track-aud">14–18 років · школи України</div>
+        <div class="track-stats">
+          <div class="track-stat"><span class="track-stat-l">Грантова категорія</span><span class="track-stat-v">EU4Youth, USAID</span></div>
+          <div class="track-stat"><span class="track-stat-l">Ціль учасників</span><span class="track-stat-v">2 000/рік</span></div>
+          <div class="track-stat"><span class="track-stat-l">Вартість/учасник</span><span class="track-stat-v">~$5</span></div>
+        </div>
+      </div>
+      <div class="track">
+        <div class="track-num">TRACK / 02</div>
+        <div class="track-name">University Life Design</div>
+        <div class="track-aud">Студенти KSE</div>
+        <div class="track-stats">
+          <div class="track-stat"><span class="track-stat-l">Грантова категорія</span><span class="track-stat-v">Внутрішній бюджет KSE</span></div>
+          <div class="track-stat"><span class="track-stat-l">Ціль учасників</span><span class="track-stat-v">100% студентів</span></div>
+          <div class="track-stat"><span class="track-stat-l">Вартість/учасник</span><span class="track-stat-v">Включено в навчання</span></div>
+        </div>
+      </div>
+      <div class="track">
+        <div class="track-num">TRACK / 03</div>
+        <div class="track-name">Career Reinvention with AI</div>
+        <div class="track-aud">Ветерани, ВПО, дорослі 30+</div>
+        <div class="track-stats">
+          <div class="track-stat"><span class="track-stat-l">Грантова категорія</span><span class="track-stat-v">UNICEF, B2B-клієнти</span></div>
+          <div class="track-stat"><span class="track-stat-l">Ціль учасників</span><span class="track-stat-v">500/рік</span></div>
+          <div class="track-stat"><span class="track-stat-l">Вартість/учасник</span><span class="track-stat-v">$0 (ветерани) / $50+ (B2B)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec budget-sec" id="budget">
+  <div class="wrap">
+    <div class="ey"><span class="num">05</span>Бюджет</div>
+    <div class="h2">Що це коштує KSE — точно, по фазах</div>
+    <p class="lead">Принцип той самий, що й у будь-якій ефективній організації: мінімальний капітал на валідацію, масштаб тільки після доказів.</p>
+
+    <div class="budget-banner">
+      <span class="bb-text">Грошові витрати KSE на запуск пілоту (Фаза 1)</span>
+      <span class="bb-num">$0</span>
+    </div>
+    <div class="budget-tabs">
+      <div class="btab active" onclick="showPhase('p1',this)">Фаза 1 · Пілот</div>
+      <div class="btab" onclick="showPhase('p2',this)">Фаза 2 · Масштаб</div>
+      <div class="btab" onclick="showPhase('p3',this)">Фаза 3 · Нац. програма</div>
+    </div>
+
+    <div class="bphase active" id="p1">
+      <div class="budget-grid">
+        <div>
+          <div class="b-col-title">Джерела</div>
+          <div class="b-row"><span class="b-row-l">Грант ESAP (Hope Children)</span><span class="b-row-v in">$1 000–1 500</span></div>
+          <div class="b-row"><span class="b-row-l">Внесок KSE</span><span class="b-row-v in">In-kind (бренд, мережа)</span></div>
+          <div class="b-row"><span class="b-row-l">Робота Lab Director</span><span class="b-row-v in">Волонтерська</span></div>
+          <div class="b-total-row"><span class="b-row-l">Готівка для пілоту</span><span class="b-row-v">$1 000–1 500</span></div>
+        </div>
+        <div>
+          <div class="b-col-title">Витрати</div>
+          <div class="b-row"><span class="b-row-l">AI API (50 сесій)</span><span class="b-row-v">$150</span></div>
+          <div class="b-row"><span class="b-row-l">Career Map дизайн + сертифікат</span><span class="b-row-v">$200</span></div>
+          <div class="b-row"><span class="b-row-l">Відео для PR (3 кейси)</span><span class="b-row-v">$300</span></div>
+          <div class="b-row"><span class="b-row-l">Адмін, школи, інше</span><span class="b-row-v">$150</span></div>
+          <div class="b-total-row"><span class="b-row-l">Всього</span><span class="b-row-v">~$800</span></div>
+        </div>
+      </div>
+      <div class="b-kse-cost">Грошові витрати KSE: <strong class="zero">$0</strong>. Внесок — бренд, мережа шкіл, репутаційна підтримка. Результат: 50 учасників, доказова база для гранту фази 2.</div>
+    </div>
+
+    <div class="bphase" id="p2">
+      <div class="budget-grid">
+        <div>
+          <div class="b-col-title">Джерела</div>
+          <div class="b-row"><span class="b-row-l">EU4Youth / USAID</span><span class="b-row-v in">$50 000–80 000</span></div>
+          <div class="b-row"><span class="b-row-l">British Council / UNICEF</span><span class="b-row-v in">$10 000–30 000</span></div>
+          <div class="b-row"><span class="b-row-l">Перший B2B-трек</span><span class="b-row-v in">$5 000–15 000</span></div>
+          <div class="b-total-row"><span class="b-row-l">Бюджет</span><span class="b-row-v">$65K–125K</span></div>
+        </div>
+        <div>
+          <div class="b-col-title">Витрати</div>
+          <div class="b-row"><span class="b-row-l">Lab Director (часткова ставка)</span><span class="b-row-v">$12K–18K</span></div>
+          <div class="b-row"><span class="b-row-l">Команда коучів (3–5)</span><span class="b-row-v">$15K–25K</span></div>
+          <div class="b-row"><span class="b-row-l">AI-платформа</span><span class="b-row-v">$8K–15K</span></div>
+          <div class="b-row"><span class="b-row-l">Маркетинг, Bootcamp, адмін</span><span class="b-row-v">$13K–21K</span></div>
+          <div class="b-total-row"><span class="b-row-l">Всього</span><span class="b-row-v">~$48K–79K</span></div>
+        </div>
+      </div>
+      <div class="b-kse-cost">Грошові витрати KSE: <strong class="zero">$0</strong> прямих, опціонально співфінансування. Результат: 2 000 учасників, держконтракт у переговорах.</div>
+    </div>
+
+    <div class="bphase" id="p3">
+      <div class="budget-grid">
+        <div>
+          <div class="b-col-title">Джерела</div>
+          <div class="b-row"><span class="b-row-l">Держконтракт МОН / EU Reconstruction</span><span class="b-row-v in">$150K–300K</span></div>
+          <div class="b-row"><span class="b-row-l">UNDP / другий раунд EU</span><span class="b-row-v in">$80K–150K</span></div>
+          <div class="b-row"><span class="b-row-l">B2B + ліцензування</span><span class="b-row-v in">$70K–140K</span></div>
+          <div class="b-total-row"><span class="b-row-l">Річний бюджет</span><span class="b-row-v">$300K–590K</span></div>
+        </div>
+        <div>
+          <div class="b-col-title">Витрати</div>
+          <div class="b-row"><span class="b-row-l">Команда (8–12 + PM + tech)</span><span class="b-row-v">$104K–156K</span></div>
+          <div class="b-row"><span class="b-row-l">Платформа, регіональні координатори</span><span class="b-row-v">$45K–75K</span></div>
+          <div class="b-row"><span class="b-row-l">Bootcamp, PR, дослідження</span><span class="b-row-v">$45K–78K</span></div>
+          <div class="b-total-row"><span class="b-row-l">Всього</span><span class="b-row-v">~$194K–309K</span></div>
+        </div>
+      </div>
+      <div class="b-kse-cost">Грошові витрати KSE: <strong class="zero">$0</strong> прямих. <strong>Самоокупність</strong> через B2B-трек з фази 3. 25 000+ учасників/рік під брендом KSE.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec risk-sec" id="risks">
+  <div class="wrap">
+    <div class="ey"><span class="num">06</span>Чесно про ризики</div>
+    <div class="h2">Що може піти не так — без прикрас</div>
+    <p class="lead">Прямота, а не маркетинг. Ось три головні ризики і як вони закриваються структурою проєкту.</p>
+
+    <div class="risk-grid">
+      <div class="risk-card flag">
+        <div class="risk-q">Чи витримає AI-діагностика наукову критику?</div>
+        <div class="risk-a">Поки методологія не верифікована академічно. Закривається через магістерську дисертацію Lab Director у психології або суміжній галузі — з реальною вибіркою з пілоту як дослідницькими даними.</div>
+      </div>
+      <div class="risk-card flag">
+        <div class="risk-q">Чи масштабується модель без втрати якості?</div>
+        <div class="risk-a">Ризик реальний при переході з 50 на 2 000 учасників. Закривається поетапно: кожна фаза вимагає підтвердженого NPS перед переходом до наступної. Немає доказів — немає масштабування.</div>
+      </div>
+      <div class="risk-card flag">
+        <div class="risk-q">Чи отримає Lab Director ресурс довести проєкт до кінця?</div>
+        <div class="risk-a">Без чіткого мандату від KSE — бренду, контакту для шкіл, листа підтримки для грантів — проєкт залишиться ідеєю. Це єдине, що насправді потрібно від KSE на старті.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec dir-sec">
+  <div class="wrap">
+    <div class="ey"><span class="num">07</span>Хто виконує</div>
+    <div class="dir-grid">
+      <div>
+        <div class="dir-name">Ірина Луценко</div>
+        <div class="dir-role">Lab Director — Proposal</div>
+        <div class="dir-facts">
+          <div class="dir-fact"><span class="dir-fact-n">4+</span><span class="dir-fact-t">роки управління освітніми та профорієнтаційними програмами з ЮНІСЕФ і міжнародними донорами</span></div>
+          <div class="dir-fact"><span class="dir-fact-n">100%</span><span class="dir-fact-t">виконання KPI перед донорами на всіх керованих проєктах</span></div>
+          <div class="dir-fact"><span class="dir-fact-n">×2.5</span><span class="dir-fact-t">зростання проєкту з 80 до 200 учасників за рік, з 1 до 4 напрямків</span></div>
+          <div class="dir-fact"><span class="dir-fact-n">−50%</span><span class="dir-fact-t">скорочення адмінвитрат через впровадження LMS і CRM-систем</span></div>
+        </div>
+      </div>
+      <div class="dir-side">
+        <div class="dir-side-title">Контекст</div>
+        <div class="dir-side-item">Директор освітніх програм, Hope Children of Ukraine — фонд для дітей загиблих захисників</div>
+        <div class="dir-side-item">Дружина ветерана АТО — особисте розуміння аудиторії</div>
+        <div class="dir-side-item">Готує дослідницьку базу через міжнародну магістратуру 2027</div>
+        <div class="dir-side-item">Методологія перевірена: Ikigai + SWOT + AI-коучинг</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="decision-sec" id="decision">
+  <div class="decision-inner">
+    <div class="decision-kicker">Рішення</div>
+    <div class="decision-title">$0 на валідацію.<br>400x потенційний ROI.<br>3 місяці до перших результатів.</div>
+    <div class="decision-options">
+      <div class="opt-card no">
+        <div class="opt-label">Не робити нічого</div>
+        <div class="opt-text">Підлітки продовжують обирати кар'єру навмання. Талант продовжує втікати в «другорядні виші» за кордон. KSE не присутній у профорієнтації жодним чином.</div>
+      </div>
+      <div class="opt-card yes">
+        <div class="opt-label">Дати мандат на пілот</div>
+        <div class="opt-text">3 місяці, $0 від KSE, 50 учасників. Якщо працює — масштабуємо з грантовим фінансуванням. Якщо ні — закриваємо без втрат.</div>
+      </div>
+    </div>
+    <div class="cta-row">
+      <a href="mailto:irenlutsen@gmail.com" class="btn-p">30 хвилин — обговорити →</a>
+      <a href="tel:+380683521151" class="btn-s">+38 068 352 11 51</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:rgba(255,255,255,.6)">KSE Life Design Lab</strong> · Стратегічна записка · Ірина Луценко · 2026
+</footer>
+
+<script>
+function showPhase(id, el) {
+  document.querySelectorAll('.bphase').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.btab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
